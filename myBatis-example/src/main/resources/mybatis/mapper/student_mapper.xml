@@ -13,6 +13,18 @@
 		select * from student
 	</select>
 
+	<select id="findBy" resultMap="result" resultType="list">
+		<bind name="pattern" value="'%' + name + '%'" />
+		select * from
+		student
+		<where>
+			<if test="name != null">
+				name like #{pattern}
+			</if>
+		</where>
+		order by name DESC
+	</select>
+
 	<resultMap id="result" type="Student">
 		<result property="id" column="id" />
 		<result property="name" column="name" />

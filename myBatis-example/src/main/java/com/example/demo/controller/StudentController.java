@@ -29,4 +29,9 @@ public class StudentController {
 		Student student = JSON.parseObject(JSON.toJSONString(obj), Student.class);
 		return ResponseEntity.ok(studentService.insertStudent(student));
 	}
+
+	@GetMapping(value = "/find")
+	public ResponseEntity<?> findBy() {
+		return ResponseEntity.ok(studentService.findBy("name", "a", "24"));
+	}
 }

@@ -12,4 +12,6 @@ public interface StudentMapper {
 	public List<Student> findAllStudent();
 
 	public int insertStudent(Student st);
+
+	public List<Student> findBy(String fileName, String name, String phone);
 }

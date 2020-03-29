@@ -21,4 +21,9 @@ public class StudentServiceImpl implements StudentServie {
 	public int insertStudent(Student st) {
 		return studentMapper.insertStudent(st);
 	}
+
+	@Override
+	public List<Student> findBy(String fileName, String name, String phone) {
+		return studentMapper.findBy(fileName, name, phone);
+	}
 }
