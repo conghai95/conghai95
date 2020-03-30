@@ -45,16 +45,20 @@ public class StudentService {
 	}
 
 	public Specification<Student> searchStudents(String fieldSearch, String textSearch) {
+		List<Predicate> predicates = new ArrayList<Predicate>();
 		return new Specification<Student>() {
 			private static final long serialVersionUID = 1L;
-
 			@Override
 			public Predicate toPredicate(Root<Student> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-				List<Predicate> predicates = new ArrayList<Predicate>();
 				try {
 					if (textSearch != null) {
-						predicates.add(criteriaBuilder
-								.and(criteriaBuilder.like(root.get(fieldSearch), "%" + textSearch + "%")));
+						if ("leadTeacher".equals(fieldSearch)) {
+							predicates.add(criteriaBuilder
+									.and(criteriaBuilder.like(root.get("leadTeacher").get("name"), "%" + textSearch + "%")));
+						} else {
+							predicates.add(criteriaBuilder
+									.and(criteriaBuilder.like(root.get(fieldSearch), "%" + textSearch + "%")));
+						}
 					}
 				} catch (Exception e) {
 					System.out.println("fieldSearch'sparameter is wrong format!");
