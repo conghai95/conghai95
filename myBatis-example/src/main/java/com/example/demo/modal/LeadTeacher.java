@@ -1,22 +1,24 @@
 package com.example.demo.modal;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Data
+@Setter
+@Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-public class BigStudent {
+public class LeadTeacher {
 
-	private String id;
+	private String leadTeacherId;
+
 	private String name;
+
 	private String phone;
-	private String address;
-	private String jobs;
+
+	private String addr;
 
 }

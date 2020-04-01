@@ -6,9 +6,11 @@
 <configuration>
 	<typeAliases>
 		<typeAlias alias="Student" type="com.example.demo.modal.Student" />
+		<typeAlias alias="LeadTeacher" type="com.example.demo.modal.LeadTeacher" />
 	</typeAliases>
 
 	<mappers>
 		<mapper resource="mybatis/mapper/student_mapper.xml" />
+		<mapper resource="mybatis/mapper/lead_teacher_mapper.xml" />
 	</mappers>
 </configuration>

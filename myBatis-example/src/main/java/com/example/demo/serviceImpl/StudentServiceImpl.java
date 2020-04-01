@@ -1,5 +1,6 @@
 package com.example.demo.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,33 @@ public class StudentServiceImpl implements StudentServie {
 		return studentMapper.findAllStudent();
 	}
 
-	public int insertStudent(Student st) {
-		return studentMapper.insertStudent(st);
-	}
-
 	@Override
 	public List<Student> findBy(String fileName, String name, String phone) {
 		return studentMapper.findBy(fileName, name, phone);
+	}
+
+	@Override
+	public int insertStudent(Student student) {
+		return studentMapper.insertStudent(student);
+	}
+
+	@Override
+	public int updateStudent(Student student) {
+		return studentMapper.updateStudent(student);
+	}
+
+	@Override
+	public int deleteStudent(String studentId) {
+		return studentMapper.deleteStudent(studentId);
+	}
+
+	@Override
+	public List<Student> getListStudent(int pageNo, int perPage, String searchText, String searchField,
+			String sortField, String sortType) {
+		List<Student> sts = new ArrayList<Student>();
+		if (searchField != null && !searchField.isEmpty() && searchText != null && !searchText.isEmpty()) {
+			sts = studentMapper.getListStudents(pageNo, perPage, searchText, searchField, sortField, sortType);
+		}
+		return sts;
 	}
 }

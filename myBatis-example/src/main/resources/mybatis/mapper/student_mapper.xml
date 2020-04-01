@@ -5,15 +5,18 @@
 <mapper namespace="com.example.demo.mapper.StudentMapper">
 	<insert id="insertStudent" parameterType="Student">
 		insert into
-		student (id,
-		name, phone_number) values (#{id}, #{name}, #{phone})
+		student
+		(student_id,
+		name, phone_number) values (#{studentId}, #{name},
+		#{phone})
 	</insert>
 
-	<select id="findAllStudent" resultMap="result" resultType="list">
+	<select id="findAllStudent" resultMap="resultStudent"
+		resultType="list">
 		select * from student
 	</select>
 
-	<select id="findBy" resultMap="result" resultType="list">
+	<select id="findBy" resultMap="resultStudent" resultType="list">
 		<bind name="pattern" value="'%' + name + '%'" />
 		select * from
 		student
@@ -25,9 +28,61 @@
 		order by name DESC
 	</select>
 
-	<resultMap id="result" type="Student">
-		<result property="id" column="id" />
+	<delete id="deleteStudent" parameterType="String">
+		delete from student
+		<where>
+			<if test="studentId != null">
+				student_id = #{studentId}
+			</if>
+		</where>
+	</delete>
+
+	<update id="updateStudent" parameterType="Student">
+		update student set student_id = #{studentId},
+		name = #{name},
+		phone_number = #{phone}
+		<where>
+			<if test="studentId != null">
+				student_id = #{studentId}
+			</if>
+		</where>
+	</update>
+
+	<select id="getListStudents" resultMap="resultStudent"
+		resultType="list">
+		select st.student_id, st.name, st.phone_number, st.lead_teacher_id
+		from student st
+		<if test="searchField == 'name'">
+			where st.name like '%' #{searchText} '%'
+		</if>
+		<if test="searchField == 'leadTeacher'">
+			join lead_teacher lt on st.lead_teacher_id =
+			lt.lead_teacher_id where lt.name like '%' #{searchText} '%'
+		</if>
+		<if test="sortField == 'name' and sortType == 'ASC'">
+			order by name ASC
+		</if>
+		<if test="sortField == 'name' and sortType == 'DESC'">
+			order by name DESC
+		</if>
+		<if test="searchField == 'leadTeacher'">
+			join lead_teacher lt on st.lead_teacher_id =
+			lt.lead_teacher_id where lt.name like '%' #{searchText} '%'
+		</if>
+	</select>
+
+	<resultMap id="resultStudent" type="Student">
+		<id property="studentId" column="student_id" />
 		<result property="name" column="name" />
 		<result property="phone" column="phone_number" />
+		<association property="leadTeacher"
+			resultMap="resultLeadTeacher" />
+	</resultMap>
+
+	<resultMap id="resultLeadTeacher" type="LeadTeacher">
+		<id property="leadTeacherId" column="lead_teacher_id" />
+		<result property="name" column="name" />
+		<result property="phone" column="phone_number" />
+		<result property="addr" column="address" />
 	</resultMap>
 </mapper>
