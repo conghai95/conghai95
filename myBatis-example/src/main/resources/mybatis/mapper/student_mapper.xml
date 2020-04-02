@@ -51,23 +51,32 @@
 	<select id="getListStudents" resultMap="resultStudent"
 		resultType="list">
 		select st.student_id, st.name, st.phone_number, st.lead_teacher_id
-		from student st
-		<if test="searchField == 'name'">
-			where st.name like '%' #{searchText} '%'
+		from student st join lead_teacher lt
+		on st.lead_teacher_id =
+		lt.lead_teacher_id
+		<where>
+			<if test="searchField == 'name'">
+				st.name like '%' #{searchText} '%'
+			</if>
+			<if test="searchField == 'leadTeacher'">
+				lt.name like '%' #{searchText} '%'
+			</if>
+		</where>
+		<if test="sortField == 'name'">
+			<if test="sortType == 'ASC'">
+				order by st.name ASC
+			</if>
+			<if test="sortType == 'DESC'">
+				order by st.name DESC
+			</if>
 		</if>
-		<if test="searchField == 'leadTeacher'">
-			join lead_teacher lt on st.lead_teacher_id =
-			lt.lead_teacher_id where lt.name like '%' #{searchText} '%'
-		</if>
-		<if test="sortField == 'name' and sortType == 'ASC'">
-			order by name ASC
-		</if>
-		<if test="sortField == 'name' and sortType == 'DESC'">
-			order by name DESC
-		</if>
-		<if test="searchField == 'leadTeacher'">
-			join lead_teacher lt on st.lead_teacher_id =
-			lt.lead_teacher_id where lt.name like '%' #{searchText} '%'
+		<if test="sortField == 'leadTeacher'">
+			<if test="sortType == 'ASC'">
+				order by lt.name ASC
+			</if>
+			<if test="sortType == 'DESC'">
+				order by lt.name DESC
+			</if>
 		</if>
 	</select>
 
@@ -76,8 +85,13 @@
 		<result property="name" column="name" />
 		<result property="phone" column="phone_number" />
 		<association property="leadTeacher"
-			resultMap="resultLeadTeacher" />
+			select="getTeacherLeadById" column="lead_teacher_id" />
 	</resultMap>
+
+	<select id="getTeacherLeadById" resultMap="resultLeadTeacher">
+		select * from
+		lead_teacher where lead_teacher_id = #{studentId}
+	</select>
 
 	<resultMap id="resultLeadTeacher" type="LeadTeacher">
 		<id property="leadTeacherId" column="lead_teacher_id" />

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.mapper.StudentMapper;
 import com.example.demo.modal.Student;
 import com.example.demo.service.StudentServie;
+import com.github.pagehelper.PageHelper;
 
 @Service
 public class StudentServiceImpl implements StudentServie {
@@ -42,10 +43,8 @@ public class StudentServiceImpl implements StudentServie {
 	@Override
 	public List<Student> getListStudent(int pageNo, int perPage, String searchText, String searchField,
 			String sortField, String sortType) {
-		List<Student> sts = new ArrayList<Student>();
-		if (searchField != null && !searchField.isEmpty() && searchText != null && !searchText.isEmpty()) {
-			sts = studentMapper.getListStudents(pageNo, perPage, searchText, searchField, sortField, sortType);
-		}
+		PageHelper.startPage(pageNo, perPage);
+		List<Student> sts = studentMapper.getListStudents(searchText, searchField, sortField, sortType);
 		return sts;
 	}
 }

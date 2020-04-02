@@ -8,6 +8,19 @@
 		<typeAlias alias="Student" type="com.example.demo.modal.Student" />
 		<typeAlias alias="LeadTeacher" type="com.example.demo.modal.LeadTeacher" />
 	</typeAliases>
+	
+	<plugins>
+        <plugin interceptor="com.github.pagehelper.PageHelper">
+            <property name="dialect" value="mysql"/>
+            <property name="offsetAsPageNum" value="true"/>
+            <property name="rowBoundsWithCount" value="true"/>
+            <property name="pageSizeZero" value="true"/>
+            <property name="reasonable" value="false"/>
+            <property name="params" value="pageNum=pageHelperStart;pageSize=pageHelperRows;"/>
+            <property name="supportMethodsArguments" value="false"/>
+            <property name="returnPageInfo" value="none"/>
+        </plugin>
+    </plugins>
 
 	<mappers>
 		<mapper resource="mybatis/mapper/student_mapper.xml" />

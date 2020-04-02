@@ -2,7 +2,6 @@ package com.example.demo.modal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -33,7 +32,7 @@ public class Student {
 	@Column(name = "phone_number")
 	private String phone;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "lead_teacher_id")
 	private LeadTeacher leadTeacher;
 

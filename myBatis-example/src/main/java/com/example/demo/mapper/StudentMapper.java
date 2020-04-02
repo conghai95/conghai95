@@ -19,6 +19,5 @@ public interface StudentMapper {
 
 	public int deleteStudent(String studentId);
 
-	public List<Student> getListStudents(int pageNo, int perPage, String searchText, String searchField,
-			String sortField, String sortType);
+	public List<Student> getListStudents(String searchText, String searchField, String sortField, String sortType);
 }

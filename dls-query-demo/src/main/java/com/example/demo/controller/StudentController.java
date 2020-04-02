@@ -1,7 +1,5 @@
 package com.example.demo.controller;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.modal.DataListResponse;
 import com.example.demo.modal.Student;
 import com.example.demo.service.StudentService;
 
@@ -23,18 +22,18 @@ public class StudentController {
 	private StudentService studentService;
 
 	@GetMapping("/search")
-	public ResponseEntity<List<Student>> searchFields(
-			@Valid @RequestParam(value = "fieldSearch", required = false) String fieldSearch,
-			@Valid @RequestParam(value = "textSearch", required = false) String textSearch,
-			@Valid @RequestParam(value = "pageNo", required = false) Integer pageNo,
-			@Valid @RequestParam(value = "pageSize", required = false) Integer pageSize,
+	public ResponseEntity<?> searchFields(
+			@Valid @RequestParam(value = "page", defaultValue = "0", required = false) int page,
+			@Valid @RequestParam(value = "perPage", defaultValue = "10", required = false) int perPage,
+			@Valid @RequestParam(value = "searchText", defaultValue = "", required = false) String searchText,
 			@Valid @RequestParam(value = "sortField", required = false) String sortField,
-			@Valid @RequestParam(value = "sortType", required = false) String sortType) {
-		List<Student> sts = studentService.getListStudent(pageNo, pageSize, fieldSearch, textSearch, sortField,
-				sortType);
-		for (Student st : sts) {
-			System.out.println(st);
-		}
+			@Valid @RequestParam(value = "sortType", required = false) String sortType,
+			@Valid @RequestParam(value = "searchField", required = false) String searchField,
+			@Valid @RequestParam(value = "timeFrom", required = false) String timeForm,
+			@Valid @RequestParam(value = "timeTo", required = false) String timeTo) {
+		DataListResponse<Student> sts = studentService.getListStudent(page, perPage, searchText,
+				sortField, sortType, searchField, timeForm, timeTo);
+
 		return ResponseEntity.status(HttpStatus.OK).body(sts);
 	}
 }
