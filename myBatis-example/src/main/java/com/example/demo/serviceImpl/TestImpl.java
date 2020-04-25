@@ -2,48 +2,49 @@ package com.example.demo.serviceImpl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.demo.mapper.StudentMapper;
+
 import com.example.demo.modal.Student;
 import com.example.demo.service.StudentServie;
-import com.github.pagehelper.PageHelper;
 
-@Service
-public class StudentServiceImpl implements StudentServie {
+@Service("TestImpl")
+public class TestImpl implements StudentServie {
 
-	@Autowired
-	private StudentMapper studentMapper;
-
+	@Override
 	public List<Student> findAllStudent() {
-		return studentMapper.findAllStudent();
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public List<Student> findBy(String fileName, String name, String phone) {
-		return studentMapper.findBy(fileName, name, phone);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public int insertStudent(Student student) {
-		return studentMapper.insertStudent(student);
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
 	public int updateStudent(Student student) {
-		return studentMapper.updateStudent(student);
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
 	public int deleteStudent(String studentId) {
-		return studentMapper.deleteStudent(studentId);
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
 	public List<Student> getListStudent(int pageNo, int perPage, String searchText, String searchField,
 			String sortField, String sortType) {
-		PageHelper.startPage(pageNo, perPage);
-		List<Student> sts = studentMapper.getListStudents(searchText, searchField, sortField, sortType);
-		return sts;
+		// TODO Auto-generated method stub
+		return null;
 	}
+
 }
