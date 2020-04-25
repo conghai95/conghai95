@@ -30,13 +30,12 @@ public class StudentController {
 
 	@GetMapping("/list")
 	public ResponseEntity<?> getListStudent(
-			@Valid @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
-			@Valid @RequestParam(value = "perPage", defaultValue = "10", required = false) int perPage,
+			@Valid @RequestParam(value = "pageNo", defaultValue = "1", required = false) int pageNo,
+			@Valid @RequestParam(value = "perPage", defaultValue = "4", required = false) int perPage,
 			@Valid @RequestParam(value = "searchField", required = false) String searchField,
 			@Valid @RequestParam(value = "searchText", defaultValue = "", required = false) String searchText,
 			@Valid @RequestParam(value = "sortField", required = false) String sortField,
 			@Valid @RequestParam(value = "sortType", required = false) String sortType) {
-
 		return ResponseEntity
 				.ok(studentService.getListStudent(pageNo, perPage, searchText, searchField, sortField, sortType));
 	}
@@ -57,7 +56,7 @@ public class StudentController {
 		return ResponseEntity.ok(studentService.updateStudent(student));
 	}
 
-	@GetMapping(value = "/{studentId}")
+	@GetMapping(value = "/delete/{studentId}")
 	public ResponseEntity<?> deleteStudent(@PathVariable String studentId) {
 		return ResponseEntity.ok(studentService.deleteStudent(studentId));
 	}

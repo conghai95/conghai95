@@ -21,4 +21,9 @@ public class Student {
 
 	private LeadTeacher leadTeacher;
 
+	public Student(String name, String phone) {
+		this.name = name;
+		this.phone = phone;
+	}
+
 }
